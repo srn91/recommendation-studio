@@ -102,6 +102,13 @@ Useful endpoints:
 make verify
 ```
 
+## Hosted Deployment
+
+- Live URL: [https://recommendation-studio.onrender.com](https://recommendation-studio.onrender.com)
+- First path to click: `/health`, then `/recommend/user_0001?k=5`
+- Browser smoke: passed on `/recommend/user_0001?k=5`; direct HTTP to `/health` and `/recommend/user_0001?k=5` returned `200`
+- Render config: Git-backed Python web service on `main`, `buildCommand=python3 -m pip install -r requirements.txt`, `startCommand=uvicorn app.main:app --host 0.0.0.0 --port $PORT`, `healthCheckPath=/health`, `plan=free`, `region=oregon`, auto-deploy enabled
+
 ## Validation
 
 The V1 repo currently verifies:
