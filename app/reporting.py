@@ -5,6 +5,7 @@ from pathlib import Path
 
 from app.config import GENERATED_DIR, TOP_K
 from app.evaluation import diversity_at_k, novelty_at_k, precision_at_k
+from app.fallback import cold_start_recommendations
 from app.reranking import rerank_for_diversity
 from app.training import train_model
 
@@ -55,6 +56,10 @@ def build_report(seed: int = 20260426) -> dict[str, object]:
         "reranked_novelty_at_5": round(novelty_at_k(reranked_rows, "rerank_score", TOP_K), 4),
         "reranked_diversity_at_5": round(diversity_at_k(reranked_rows, "rerank_score", TOP_K), 4),
         "preview_recommendations": preview,
+        "cold_start_preview": {
+            "preferred_category": "wellness",
+            "results": cold_start_recommendations(TOP_K, preferred_category="wellness"),
+        },
     }
     return report
 
@@ -79,6 +84,19 @@ def render_markdown(report: dict[str, object]) -> str:
         "",
     ]
     for row in preview_rows:
+        lines.append(
+            f"- `{row['item_id']}` category=`{row['category']}` base_score=`{row['base_score']}` rerank_score=`{row['rerank_score']}`"
+        )
+    lines.extend(
+        [
+            "",
+            "## Cold-Start Fallback Preview",
+            "",
+            "Preferred category: `wellness`",
+            "",
+        ]
+    )
+    for row in report["cold_start_preview"]["results"]:
         lines.append(
             f"- `{row['item_id']}` category=`{row['category']}` base_score=`{row['base_score']}` rerank_score=`{row['rerank_score']}`"
         )

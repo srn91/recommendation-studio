@@ -95,6 +95,7 @@ Useful endpoints:
 - `http://127.0.0.1:8004/health`
 - `http://127.0.0.1:8004/users`
 - `http://127.0.0.1:8004/recommend/user_0001?k=5`
+- `http://127.0.0.1:8004/recommend/new_user_9000?k=5&preferred_category=wellness`
 
 ### Run the Full Quality Gate
 
@@ -117,6 +118,7 @@ The V1 repo currently verifies:
 - base relevance ranking and diversity-aware reranking for the same user
 - offline precision@5, novelty, and intra-list diversity metrics
 - reranked lists improve diversity and novelty without collapsing precision
+- unknown users can still receive a category-aware cold-start list driven by catalog metadata
 
 Measured local snapshot from the report:
 
@@ -152,6 +154,7 @@ The V1 repo demonstrates:
 - diversity-aware reranking
 - offline tradeoff metrics for relevance, novelty, and diversity
 - FastAPI surface for recommendation retrieval
+- content-metadata cold-start fallback for users with no behavioral history
 
 ## Next Steps
 
@@ -159,6 +162,6 @@ Realistic follow-up work for the next milestone:
 
 1. add implicit-feedback training from click or watch histories
 2. compare multiple reranking strategies under the same evaluation set
-3. add cold-start fallbacks based on content metadata
+3. blend cold-start priors with session context or recency signals
 4. log simulated feedback for future retraining loops
 5. add business constraints such as exposure caps or vendor fairness
