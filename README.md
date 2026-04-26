@@ -16,6 +16,17 @@ The V1 implementation keeps the system laptop-runnable while still reflecting a 
 - a reranking layer applies a diversity penalty to reduce same-category saturation
 - an evaluation layer reports precision, novelty, and intra-list diversity for both the base ranking and the reranked list
 
+## Pipeline Walkthrough
+
+The recommendation flow is intentionally explicit so reviewers can see where each step lives:
+
+1. `app/dataset.py` creates synthetic users, catalog items, and candidate rows.
+2. `app/training.py` trains the base scorer on those candidate features.
+3. `app/reranking.py` reorders the top-k list to improve category coverage and novelty.
+4. `app/evaluation.py` measures precision, novelty, and diversity for both ranking passes.
+5. `app/reporting.py` writes the JSON and Markdown artifacts that summarize the run.
+6. `app/main.py` exposes a FastAPI surface for interactive recommendation lookup.
+
 ```mermaid
 flowchart LR
     A["Synthetic users + catalog"] --> B["Candidate generation"]
@@ -99,6 +110,16 @@ The V1 repo currently verifies:
 - base relevance ranking and diversity-aware reranking for the same user
 - offline precision@5, novelty, and intra-list diversity metrics
 - reranked lists improve diversity and novelty without collapsing precision
+
+Measured local snapshot from the report:
+
+- users evaluated: `18`
+- base precision@5: `1.0`
+- reranked precision@5: `0.8`
+- base diversity@5: `0.4`
+- reranked diversity@5: `0.6`
+- base novelty@5: `0.19`
+- reranked novelty@5: `0.5004`
 
 Current expected evaluation snapshot:
 
