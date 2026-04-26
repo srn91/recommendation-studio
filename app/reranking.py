@@ -44,3 +44,29 @@ def rerank_for_diversity(rows: list[dict[str, object]], k: int) -> list[dict[str
         category_counts[category] = category_counts.get(category, 0) + 1
 
     return selected
+
+
+def rerank_for_novelty_blend(rows: list[dict[str, object]], k: int) -> list[dict[str, object]]:
+    remaining = sorted(rows, key=lambda row: row["base_score"], reverse=True)
+    selected: list[dict[str, object]] = []
+    category_counts: dict[str, int] = {}
+
+    while remaining and len(selected) < k:
+        best_index = 0
+        best_score = float("-inf")
+        for index, row in enumerate(remaining):
+            seen_count = category_counts.get(str(row["category"]), 0)
+            repeat_penalty = 0.05 * seen_count
+            novelty_bonus = 0.16 * float(row["novelty"])
+            exploration_bonus = 0.06 * float(row["exploration_bias"])
+            rerank_score = float(row["base_score"]) + novelty_bonus + exploration_bonus - repeat_penalty
+            if rerank_score > best_score:
+                best_index = index
+                best_score = rerank_score
+        chosen = remaining.pop(best_index).copy()
+        chosen["rerank_score"] = round(best_score, 6)
+        selected.append(chosen)
+        category = str(chosen["category"])
+        category_counts[category] = category_counts.get(category, 0) + 1
+
+    return selected

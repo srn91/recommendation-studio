@@ -15,6 +15,7 @@ def test_recommendation_endpoint_returns_ranked_items() -> None:
     body = response.json()
     assert body["user_id"] == "user_0001"
     assert body["strategy"] == "behavioral_rerank"
+    assert body["selected_reranking_strategy"] in {"diversity_rerank", "novelty_blend_rerank"}
     assert len(body["results"]) == 5
 
 

@@ -14,7 +14,7 @@ The V1 implementation keeps the system laptop-runnable while still reflecting a 
 - a candidate generator produces user-item pairs with behavioral and content-style features
 - a scoring model estimates base recommendation relevance
 - a reranking layer applies a diversity penalty to reduce same-category saturation
-- an evaluation layer reports precision, novelty, and intra-list diversity for both the base ranking and the reranked list
+- an evaluation layer reports precision, novelty, and intra-list diversity for both the base ranking and multiple reranking strategies
 
 ## Pipeline Walkthrough
 
@@ -22,8 +22,8 @@ The recommendation flow is intentionally explicit so reviewers can see where eac
 
 1. `app/dataset.py` creates synthetic users, catalog items, and candidate rows.
 2. `app/training.py` trains the base scorer on those candidate features.
-3. `app/reranking.py` reorders the top-k list to improve category coverage and novelty.
-4. `app/evaluation.py` measures precision, novelty, and diversity for both ranking passes.
+3. `app/reranking.py` runs multiple reranking strategies over the same candidate list.
+4. `app/evaluation.py` measures precision, novelty, and diversity for the base ranking and each reranking strategy.
 5. `app/reporting.py` writes the JSON and Markdown artifacts that summarize the run.
 6. `app/main.py` exposes a FastAPI surface for interactive recommendation lookup.
 
@@ -118,6 +118,7 @@ The V1 repo currently verifies:
 - base relevance ranking and diversity-aware reranking for the same user
 - offline precision@5, novelty, and intra-list diversity metrics
 - reranked lists improve diversity and novelty without collapsing precision
+- the report compares multiple reranking strategies under the same evaluation set and selects a default one
 - unknown users can still receive a category-aware cold-start list driven by catalog metadata
 
 Measured local snapshot from the report:
@@ -152,6 +153,7 @@ The V1 repo demonstrates:
 - deterministic user-item recommendation candidates
 - feature-based recommendation scoring
 - diversity-aware reranking
+- side-by-side comparison of multiple reranking strategies
 - offline tradeoff metrics for relevance, novelty, and diversity
 - FastAPI surface for recommendation retrieval
 - content-metadata cold-start fallback for users with no behavioral history
@@ -161,7 +163,6 @@ The V1 repo demonstrates:
 Possible follow-on work outside the current shipped scope:
 
 1. add implicit-feedback training from click or watch histories
-2. compare multiple reranking strategies under the same evaluation set
-3. blend cold-start priors with session context or recency signals
-4. log simulated feedback for future retraining loops
-5. add business constraints such as exposure caps or vendor fairness
+2. blend cold-start priors with session context or recency signals
+3. log simulated feedback for future retraining loops
+4. add business constraints such as exposure caps or vendor fairness

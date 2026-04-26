@@ -31,7 +31,12 @@ def recommend(user_id: str, k: int = TOP_K, preferred_category: str | None = Non
     report = build_report()
     preview = report["preview_recommendations"]
     if user_id in preview:
-        return {"user_id": user_id, "strategy": "behavioral_rerank", "results": preview[user_id][:k]}
+        return {
+            "user_id": user_id,
+            "strategy": "behavioral_rerank",
+            "selected_reranking_strategy": report["selected_reranking_strategy"],
+            "results": preview[user_id][:k],
+        }
 
     try:
         validate_preferred_category(preferred_category)
