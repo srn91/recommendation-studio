@@ -156,9 +156,9 @@ The V1 repo demonstrates:
 - FastAPI surface for recommendation retrieval
 - content-metadata cold-start fallback for users with no behavioral history
 
-## Next Steps
+## Future Expansion
 
-Realistic follow-up work for the next milestone:
+Possible follow-on work outside the current shipped scope:
 
 1. add implicit-feedback training from click or watch histories
 2. compare multiple reranking strategies under the same evaluation set
