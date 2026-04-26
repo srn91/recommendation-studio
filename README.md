@@ -8,7 +8,7 @@ A recommender that only chases raw relevance often collapses into repetitive, po
 
 ## Architecture
 
-The V1 implementation keeps the system laptop-runnable while still reflecting a recommendation stack:
+The implementation keeps the system laptop-runnable while still reflecting a recommendation stack:
 
 - deterministic user profiles and catalog metadata simulate a personalization workload
 - a candidate generator produces user-item pairs with behavioral and content-style features
@@ -18,7 +18,7 @@ The V1 implementation keeps the system laptop-runnable while still reflecting a 
 
 ## Pipeline Walkthrough
 
-The recommendation flow is intentionally explicit so reviewers can see where each step lives:
+The recommendation flow is intentionally explicit so each step is easy to inspect:
 
 1. `app/dataset.py` creates synthetic users, catalog items, and candidate rows.
 2. `app/training.py` trains the base scorer on those candidate features.
@@ -42,10 +42,10 @@ flowchart LR
 
 ## Tradeoffs
 
-This V1 makes three deliberate tradeoffs:
+This implementation makes three deliberate tradeoffs:
 
 1. The dataset is synthetic so recommendation behavior stays reproducible and easy to inspect locally.
-2. The scorer is a simple feature-based model rather than collaborative filtering with embeddings because the goal is to show ranking tradeoffs clearly in V1.
+2. The scorer is a simple feature-based model rather than collaborative filtering with embeddings so the ranking tradeoffs stay clear and reproducible.
 3. Diversity is handled by a transparent reranker instead of a more complex constrained optimizer so the recommendation logic remains explainable.
 
 ## Repo Layout
@@ -112,7 +112,7 @@ make verify
 
 ## Validation
 
-The V1 repo currently verifies:
+The repo currently verifies:
 
 - deterministic candidate generation and recommendation output
 - base relevance ranking and diversity-aware reranking for the same user
@@ -148,7 +148,7 @@ Local quality gates:
 
 ## Current Capabilities
 
-The V1 repo demonstrates:
+The repo demonstrates:
 
 - deterministic user-item recommendation candidates
 - feature-based recommendation scoring
