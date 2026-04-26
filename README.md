@@ -1,10 +1,10 @@
 # recommendation-studio
 
-A local-first recommendation workflow that generates user-item candidates, scores them for relevance, reranks for diversity, and reports the tradeoff between recommendation quality, novelty, and category coverage.
+A local-first recommendation workflow that generates user-item candidates, scores them for relevance, reranks for diversity, and reports the tradeoff between recommendation quality, novelty, and diversity.
 
 ## Problem
 
-A recommender that only chases raw relevance often collapses into repetitive, popularity-heavy results. Real recommendation systems need to balance multiple objectives: likely engagement, catalog coverage, novelty, and enough diversity that the list feels useful instead of redundant. This repo focuses on that explicit tradeoff.
+A recommender that only chases raw relevance often collapses into repetitive, popularity-heavy results. Real recommendation systems need to balance multiple objectives: likely engagement, novelty, and enough diversity that the list feels useful instead of redundant. This repo focuses on that explicit tradeoff.
 
 ## Architecture
 
@@ -57,7 +57,7 @@ recommendation-studio/
 ### Install Dependencies
 
 ```bash
-git clone git@github.com:srn91/recommendation-studio.git
+git clone https://github.com/srn91/recommendation-studio.git
 cd recommendation-studio
 python3 -m pip install -r requirements.txt
 ```
@@ -98,7 +98,7 @@ The V1 repo currently verifies:
 - deterministic candidate generation and recommendation output
 - base relevance ranking and diversity-aware reranking for the same user
 - offline precision@5, novelty, and intra-list diversity metrics
-- reranked lists improve diversity and category coverage without collapsing precision
+- reranked lists improve diversity and novelty without collapsing precision
 
 Current expected evaluation snapshot:
 
