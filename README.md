@@ -3,9 +3,9 @@
 A local-first recommendation workflow that generates user-item candidates, scores them for relevance, reranks for diversity, and reports the tradeoff between recommendation quality, novelty, and diversity.
 
 
-## Proof Snapshot
+## Results
 
-| Signal | Current evidence |
+| Area | Details |
 |---|---|
 | Evaluation set | Current report evaluates `18` users across base and reranked recommendation lists. |
 | Relevance tradeoff | Base precision@5 is `1.0`; reranked precision@5 is `0.8` while increasing list quality on other objectives. |
@@ -13,7 +13,7 @@ A local-first recommendation workflow that generates user-item candidates, score
 | Novelty lift | Novelty@5 moves from `0.19` to `0.5004` after reranking. |
 | Serving proof | FastAPI exposes `/recommend/{user_id}` and returned `200` in hosted smoke tests. |
 
-## What This Proves
+## Overview
 
 - Recommendation quality is treated as a multi-objective tradeoff across relevance, novelty, and diversity.
 - The repo shows candidate generation, scoring, reranking, offline evaluation, and API serving in one reproducible workflow.
