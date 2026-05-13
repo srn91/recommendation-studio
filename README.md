@@ -11,7 +11,7 @@ A local-first recommendation workflow that generates user-item candidates, score
 | Relevance tradeoff | Base precision@5 is `1.0`; reranked precision@5 is `0.8` while increasing list quality on other objectives. |
 | Diversity lift | Diversity@5 moves from `0.4` to `0.6` after reranking. |
 | Novelty lift | Novelty@5 moves from `0.19` to `0.5004` after reranking. |
-| Serving proof | FastAPI exposes `/recommend/{user_id}` and returned `200` in hosted smoke tests. |
+| Serving | FastAPI exposes `/recommend/{user_id}` and returned `200` in hosted smoke tests. |
 
 ## Overview
 
