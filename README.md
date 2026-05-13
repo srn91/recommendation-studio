@@ -17,7 +17,7 @@ A local-first recommendation workflow that generates user-item candidates, score
 
 - Recommendation quality is treated as a multi-objective tradeoff across relevance, novelty, and diversity.
 - The repo shows candidate generation, scoring, reranking, offline evaluation, and API serving in one reproducible workflow.
-- The evidence maps to Applied Scientist, Recommendation Systems, ML Engineer, and personalization roles.
+- The implementation combines candidate generation, fallback logic, reranking, quality metrics, and API serving.
 
 ## Problem
 
