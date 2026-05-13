@@ -163,7 +163,7 @@ Local quality gates:
 - `make report`
 - `make verify`
 
-## Current Capabilities
+## Capabilities
 
 The repo demonstrates:
 
