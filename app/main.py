@@ -20,6 +20,24 @@ def health() -> dict[str, object]:
     return {"status": "ok", "metrics": {k: v for k, v in report.items() if k != "preview_recommendations"}}
 
 
+@app.get("/")
+def index() -> dict[str, object]:
+    report = build_report()
+    preview_users = sorted(report["preview_recommendations"].keys() or ["user_0001"])
+    return {
+        "project": "recommendation-studio",
+        "status": "ready",
+        "selected_reranking_strategy": report["selected_reranking_strategy"],
+        "sample_user": preview_users[0],
+        "endpoints": {
+            "health": "/health",
+            "users": "/users",
+            "example_recommendation": f"/recommend/{preview_users[0]}?k=5",
+            "docs": "/docs",
+        },
+    }
+
+
 @app.get("/users")
 def users() -> dict[str, list[str]]:
     report = build_report()
