@@ -122,7 +122,8 @@ make verify
 
 ## Hosted Deployment
 
-- Live API: [`/recommend/user_0001?k=5`](https://recommendation-studio.onrender.com/recommend/user_0001?k=5)
+- Live demo: [recommendation-studio.onrender.com](https://recommendation-studio.onrender.com)
+- Sample API: [`/recommend/user_0001?k=5`](https://recommendation-studio.onrender.com/recommend/user_0001?k=5)
 - Browser smoke: passed on `/recommend/user_0001?k=5`; direct HTTP to `/health` and `/recommend/user_0001?k=5` returned `200`
 - Render config: Git-backed Python web service on `main`, `buildCommand=python3 -m pip install -r requirements.txt`, `startCommand=uvicorn app.main:app --host 0.0.0.0 --port $PORT`, `healthCheckPath=/health`, `plan=free`, `region=oregon`, auto-deploy enabled
 
